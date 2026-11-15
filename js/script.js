@@ -192,29 +192,75 @@ if (formContato) {
 }
 
 // INÍCIO: menu responsivo compartilhado.
-// Abre e fecha o menu em telas menores e informa o estado aos leitores de tela.
+// Abre e fecha o menu em telas menores e garante o fechamento ao voltar no celular (bfcache).
 const botaoMenu = document.getElementById('botaoMenu');
 const menu = document.getElementById('menu');
+
+function fecharMenuMobile() {
+  if (!menu || !botaoMenu) return;
+  menu.classList.remove('aberto');
+  botaoMenu.setAttribute('aria-expanded', 'false');
+  botaoMenu.setAttribute('aria-label', 'Abrir menu');
+}
 
 botaoMenu?.addEventListener('click', () => {
   const menuAberto = menu.classList.toggle('aberto');
   botaoMenu.setAttribute('aria-expanded', String(menuAberto));
   botaoMenu.setAttribute('aria-label', menuAberto ? 'Fechar menu' : 'Abrir menu');
 });
+
+window.addEventListener('pageshow', fecharMenuMobile);
+
+menu?.querySelectorAll('a').forEach((link) => {
+  link.addEventListener('click', fecharMenuMobile);
+});
+
+document.addEventListener('keydown', (evento) => {
+  if (evento.key === 'Escape' && menu?.classList.contains('aberto')) {
+    fecharMenuMobile();
+    botaoMenu?.focus();
+  }
+});
 // FIM: menu responsivo compartilhado.
 
 // INÍCIO: controles de acessibilidade compartilhados.
-// Ajusta a escala do conteúdo e alterna o tema de alto contraste, anunciando as alterações.
+// Ajusta a escala do conteúdo, alterna o alto contraste e salva as preferências entre páginas.
 const botaoAumentarTexto = document.getElementById('aumentarTexto');
 const botaoDiminuirTexto = document.getElementById('diminuirTexto');
 const botaoContraste = document.getElementById('alternarContraste');
 const statusAcessibilidade = document.getElementById('statusAcessibilidade');
+const chaveAltoContraste = 'aromaCafeAltoContraste';
+const chaveEscalaConteudo = 'aromaCafeEscalaConteudo';
 let escalaConteudo = 1;
+
+function aplicarPreferenciasAcessibilidade() {
+  try {
+    const escalaSalva = parseFloat(localStorage.getItem(chaveEscalaConteudo));
+    if (!Number.isNaN(escalaSalva) && escalaSalva >= 0.8 && escalaSalva <= 1.3) {
+      escalaConteudo = escalaSalva;
+      document.documentElement.style.setProperty('--escala-conteudo', escalaConteudo.toFixed(1));
+    }
+
+    const contrasteSalvo = localStorage.getItem(chaveAltoContraste) === 'true';
+    document.body.classList.toggle('alto-contraste', contrasteSalvo);
+    if (botaoContraste) {
+      botaoContraste.setAttribute('aria-pressed', String(contrasteSalvo));
+    }
+  } catch (erro) {
+    // Ignora falhas de acesso ao localStorage em navegação restrita
+  }
+}
 
 function atualizarEscalaConteudo(diferenca) {
   escalaConteudo = Math.min(1.3, Math.max(0.8, escalaConteudo + diferenca));
-  document.documentElement.style.setProperty('--escala-conteudo', escalaConteudo.toFixed(1));
-  statusAcessibilidade.textContent = `Tamanho do conteúdo: ${Math.round(escalaConteudo * 100)}%.`;
+  const valorFormatado = escalaConteudo.toFixed(1);
+  document.documentElement.style.setProperty('--escala-conteudo', valorFormatado);
+  try {
+    localStorage.setItem(chaveEscalaConteudo, valorFormatado);
+  } catch (erro) {}
+  if (statusAcessibilidade) {
+    statusAcessibilidade.textContent = `Tamanho do conteúdo: ${Math.round(escalaConteudo * 100)}%.`;
+  }
 }
 
 botaoAumentarTexto?.addEventListener('click', () => atualizarEscalaConteudo(0.1));
@@ -223,11 +269,21 @@ botaoDiminuirTexto?.addEventListener('click', () => atualizarEscalaConteudo(-0.1
 botaoContraste?.addEventListener('click', () => {
   const contrasteAtivado = document.body.classList.toggle('alto-contraste');
   botaoContraste.setAttribute('aria-pressed', String(contrasteAtivado));
-  statusAcessibilidade.textContent = contrasteAtivado
-    ? 'Alto contraste ativado.'
-    : 'Alto contraste desativado.';
+  try {
+    localStorage.setItem(chaveAltoContraste, String(contrasteAtivado));
+  } catch (erro) {}
+  if (statusAcessibilidade) {
+    statusAcessibilidade.textContent = contrasteAtivado
+      ? 'Alto contraste ativado.'
+      : 'Alto contraste desativado.';
+  }
 });
+
+aplicarPreferenciasAcessibilidade();
+window.addEventListener('pageshow', aplicarPreferenciasAcessibilidade);
 // FIM: controles de acessibilidade compartilhados.
+
+
 
 // INÍCIO: leitura em voz alta com a Web Speech API
 // Lê o conteúdo principal e permite iniciar/parar a leitura por meio dos controles da página.
