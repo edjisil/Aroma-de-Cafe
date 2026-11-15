@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Cafeteria Aroma de Café - Projeto Front-End",
   "scripts": {
-    "start": "npx serve -s . -l $PORT"
+    "start": "npx serve . -l $PORT"
+
   }
 }
