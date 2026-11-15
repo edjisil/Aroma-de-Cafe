@@ -12,7 +12,8 @@
 
 Aplicação web institucional e educativa dedicada à venda de cafés especiais sustentáveis, ao fortalecimento da agricultura familiar local e à conscientização ambiental.
 
-🌐 **Site Publicado (HTTPS):** [https://railway.app](aroma-de-cafe-production.up.railway.app)  
+🌐 **Site Publicado (HTTPS):** [https://aroma-de-cafe-production-8220c41b.up.railway.app/](https://aroma-de-cafe-production-8220c41b.up.railway.app/)  
+🔄 **Espelho Reserva (GitHub Pages):** [https://github.io](https://github.io)  
 📂 **Repositório Oficial:** [://github.com](https://://github.com)
 
 ---
@@ -44,11 +45,12 @@ O projeto promove o consumo consciente e a inclusão social por meio de uma cafe
    ```
 2. **Acesse a pasta do projeto:**
    ```bash
-   cd U-UNICID-ADS-CC-ENG-ADS-FRONTEND-2260016-D4-2-2026-M-AROMADECAFE
+   cd Aroma-de-Cafe
    ```
 3. **Execute no navegador:**
    - Abra o arquivo `index.html` diretamente em qualquer navegador moderno, **ou**
-   - Utilize a extensão **Live Server** no Visual Studio Code clicando em *"Go Live"* para simular o servidor HTTP local.
+   - Utilize a extensão **Live Server** no Visual Studio Code clicando em *"Go Live"*, **ou**
+   - Rode `npm start` no terminal para iniciar o servidor local via `serve`.
 
 ---
 
@@ -59,6 +61,7 @@ O projeto promove o consumo consciente e a inclusão social por meio de uma cafe
 
 ```text
 ├── index.html                  # Página inicial com vídeo de fundo e apresentação
+├── package.json                # Configuração de start do servidor web no Railway
 ├── css/
 │   ├── style.css               # Estilos globais, cabeçalho, acessibilidade e responsividade
 │   ├── paginas.css             # Estilos das páginas internas (Sobre, Cardápio, Galeria, Mídias, Notícias)
@@ -99,8 +102,8 @@ Toda a documentação exigida na rubrica de avaliação está organizada na past
 
 | Integrante | Responsabilidades Principais |
 | :--- | :--- |
-| **Ednalvo Jose da Silva** | Desenvolvimento das páginas *Sobre*, *Mídias* e *Galeria*, curadoria visual e integração de IA |
-| **Felipe Jun Takenaka** | Gestão do repositório GitHub, versionamento, deploy no Railway e integração geral |
+| **Ednalvo Jose da Silva** | Desenvolvimento das páginas *Sobre*, *Mídias* e *Galeria*, curadoria visual e deploy no Railway |
+| **Felipe Jun Takenaka** | Versionamento GitHub, configuração inicial e suporte de integração |
 | **Gabriel Camilo** | Estruturação HTML5 semântica e estilização CSS das páginas institucionais |
 | **Geovane Santos** | Desenvolvimento de conteúdo educativo sobre sustentabilidade e projetos sociais |
 | **Lucas Santos Silva** | Implementação de JavaScript interativo, validações e armazenamento com `localStorage` |
