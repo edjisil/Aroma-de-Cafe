@@ -12,7 +12,7 @@
 
 Aplicação web institucional e educativa dedicada à venda de cafés especiais sustentáveis, ao fortalecimento da agricultura familiar local e à conscientização ambiental.
 
-🌐 **Site Publicado (HTTPS):** [https://railway.app](https://railway.app)  
+🌐 **Site Publicado (HTTPS):** [https://railway.app](aroma-de-cafe-production.up.railway.app)  
 📂 **Repositório Oficial:** [://github.com](https://://github.com)
 
 ---
