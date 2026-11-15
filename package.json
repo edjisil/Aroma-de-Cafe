@@ -4,6 +4,5 @@
   "description": "Cafeteria Aroma de Café - Projeto Front-End",
   "scripts": {
     "start": "npx serve . -l $PORT"
-
   }
 }
